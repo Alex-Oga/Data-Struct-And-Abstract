@@ -1,0 +1,186 @@
+import java.util.*;
+
+public class JourneyToTheMoon {
+    static Set<List<Integer>> countries = new HashSet<>();
+
+    public static int journeyToMoon(int n, List<List<Integer>> astronaut) {
+        int total = 0;
+
+        setter(astronaut);
+        for (int i=0; i<n; i++) {
+            for (List<Integer> j: countries) {
+                if (j.contains(i))
+                    break;
+                else {
+                    total += j.size();
+                }
+            }
+        }
+
+        return total;
+    }
+
+    public static void setter(List<List<Integer>> astronauts) {
+        for (List<Integer> i: astronauts) {
+            Set<Integer> country = new HashSet<>();
+            for (Integer j: i) {
+                for (List<Integer> k: astronauts) {
+                    if (k.contains(j)) {
+                        country.addAll(k);
+                    }
+                }
+            }
+            countries.add(List.copyOf(country));
+        }
+    }
+
+    public static void main(String[] args) {
+        List<List<Integer>> test = new ArrayList<>();
+        List<Integer> a = new ArrayList<>();
+        a.add(0);
+        a.add(1);
+        a.add(4);
+        List<Integer> b = new ArrayList<>();
+        b.add(2);
+        b.add(3);
+        test.add(a);
+        test.add(b);
+        System.out.println(journeyToMoon(5, test));
+    }
+}
+
+import java.util.*;
+
+public class JourneyToTheMoon {
+    static Set<Set<Integer>> countries = new HashSet<>();
+
+    public static int journeyToMoon(int n, List<List<Integer>> astronaut) {
+        Set<Set<Integer>> combo = new HashSet<>();
+
+        setter(astronaut);
+        checker(n);
+        for (int i=0; i<n; i++) {
+            for (Set<Integer> j: countries) {
+                if (j.contains(i) == false) {
+                    for (Integer k: j) {
+                        Set<Integer> add = new HashSet<>();
+                        add.add(k);
+                        add.add(i);
+                        combo.add(add);
+                    }
+                }
+            }
+        }
+
+        return combo.size();
+    }
+
+    public static void setter(List<List<Integer>> astronauts) {
+        for (List<Integer> i: astronauts) {
+            Set<Integer> country = new HashSet<>();
+            for (Integer j: i) {
+                for (List<Integer> k: astronauts) {
+                    if (k.contains(j)) {
+                        country.addAll(k);
+                    }
+                }
+            }
+            countries.add(country);
+        }
+    }
+
+    public static void checker(int n) {
+        for (int i=0; i<n; i++) {
+            int count = 0;
+            for (Set<Integer> j: countries) {
+                if (j.contains(i)) {
+                    count++;
+                }
+            }
+            if (count==0) {
+                Set<Integer> add = new HashSet<>();
+                add.add(i);
+                countries.add(add);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        List<List<Integer>> test = new ArrayList<>();
+        List<Integer> a = new ArrayList<>();
+        a.add(0);
+        a.add(2);
+        List<Integer> b = new ArrayList<>();
+        b.add(2);
+        b.add(3);
+        test.add(a);
+
+        System.out.println(journeyToMoon(4, test));
+    }
+}
+
+import java.util.*;
+
+public class JourneyToTheMoon {
+    static Set<Set<Integer>> countries = new HashSet<>();
+
+    public static int journeyToMoon(int n, List<List<Integer>> astronaut) {
+        int total = 0;
+
+        setter(astronaut);
+        checker(n);
+        List<Set<Integer>> lst = new ArrayList<>();
+        lst.addAll(countries);
+
+        for (int i=0; i<lst.size(); i++) {
+            for (int j=i+1; j<lst.size(); j++) {
+                total += lst.get(i).size()*lst.get(j).size();
+            }
+        }
+
+        return total;
+    }
+
+    public static void setter(List<List<Integer>> astronauts) {
+        for (List<Integer> i: astronauts) {
+            Set<Integer> country = new HashSet<>();
+            for (Integer j: i) {
+                for (List<Integer> k: astronauts) {
+                    if (k.contains(j)) {
+                        country.addAll(k);
+                    }
+                }
+            }
+            countries.add(country);
+        }
+    }
+
+    public static void checker(int n) {
+        for (int i=0; i<n; i++) {
+            int count = 0;
+            for (Set<Integer> j: countries) {
+                if (j.contains(i)) {
+                    count++;
+                }
+            }
+            if (count==0) {
+                Set<Integer> add = new HashSet<>();
+                add.add(i);
+                countries.add(add);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        List<List<Integer>> test = new ArrayList<>();
+        List<Integer> a = new ArrayList<>();
+        a.add(0);
+        a.add(2);
+        List<Integer> b = new ArrayList<>();
+        b.add(2);
+        b.add(3);
+        test.add(a);
+
+        System.out.println(journeyToMoon(4, test));
+    }
+}
